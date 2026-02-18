@@ -1,8 +1,8 @@
 import { ProductCard } from '@/components/ProductCard';
 import { RenderTimestampBadge } from '@/components/RenderTimestampBadge';
-import { enablePromoBanner, precomputeFlags, showNewLayout } from '@/lib/flags';
+import { getPrecomputedForCode, precomputeFlags } from '@/lib/flags';
 import { getProducts } from '@/lib/products';
-import { generatePermutations, getPrecomputed } from 'flags/next';
+import { generatePermutations } from 'flags/next';
 import Link from 'next/link';
 
 interface HomePageProps {
@@ -19,11 +19,7 @@ export const generateStaticParams = async () => {
 export default async function HomePage({ params }: HomePageProps) {
   const { code } = await params;
   const products = await getProducts();
-  const [newLayout, promoBanner] = (await getPrecomputed(
-    [showNewLayout, enablePromoBanner],
-    precomputeFlags,
-    code,
-  )) as [boolean, boolean];
+  const [newLayout, promoBanner] = await getPrecomputedForCode(code);
 
   return (
     <div className="min-h-screen bg-gray-50">

@@ -1,7 +1,7 @@
 import { RenderTimestampBadge } from '@/components/RenderTimestampBadge';
-import { precomputeFlags, showNewLayout } from '@/lib/flags';
+import { getPrecomputedForCode, precomputeFlags } from '@/lib/flags';
 import { getProductById } from '@/lib/products';
-import { generatePermutations, getPrecomputed } from 'flags/next';
+import { generatePermutations } from 'flags/next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -22,7 +22,7 @@ export const generateStaticParams = async () => {
 export default async function ProductPage({ params }: ProductPageProps) {
   const { code, id } = await params;
   const product = await getProductById(id);
-  const [newLayout] = (await getPrecomputed([showNewLayout], precomputeFlags, code)) as [boolean];
+  const [newLayout] = await getPrecomputedForCode(code);
 
   if (!product) {
     notFound();
