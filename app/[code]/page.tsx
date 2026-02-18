@@ -2,7 +2,7 @@ import { ProductCard } from '@/components/ProductCard';
 import { RenderTimestampBadge } from '@/components/RenderTimestampBadge';
 import { enablePromoBanner, precomputeFlags, showNewLayout } from '@/lib/flags';
 import { getProducts } from '@/lib/products';
-import { getPrecomputed } from 'flags/next';
+import { generatePermutations, getPrecomputed } from 'flags/next';
 import Link from 'next/link';
 
 interface HomePageProps {
@@ -12,7 +12,8 @@ interface HomePageProps {
 }
 
 export const generateStaticParams = async () => {
-  return []
+  const codes = await generatePermutations(precomputeFlags);
+  return codes.map((code) => ({ code }));
 }
 
 export default async function HomePage({ params }: HomePageProps) {

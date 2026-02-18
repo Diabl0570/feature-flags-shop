@@ -1,7 +1,7 @@
 import { RenderTimestampBadge } from '@/components/RenderTimestampBadge';
 import { precomputeFlags, showNewLayout } from '@/lib/flags';
 import { getProductById } from '@/lib/products';
-import { getPrecomputed } from 'flags/next';
+import { generatePermutations, getPrecomputed } from 'flags/next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -14,7 +14,9 @@ interface ProductPageProps {
 }
 
 export const generateStaticParams = async () => {
-  return []
+  const codes = await generatePermutations(precomputeFlags);
+  const productIds = [1,2,3]; // important products we want to pre-render
+  return codes.flatMap((code) => productIds.map((id) => ({ code, id: id.toString() })));
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
