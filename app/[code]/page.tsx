@@ -10,6 +10,10 @@ interface HomePageProps {
   }>;
 }
 
+export const generateStaticParams = async () => {
+  return []
+}
+
 export default async function HomePage({ params }: HomePageProps) {
   const { code } = await params;
   const products = getProducts();
