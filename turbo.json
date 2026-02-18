@@ -2,7 +2,10 @@
   "$schema": "https://turborepo.dev/schema.json",
   "tasks": {
     "build": {
-      "outputs": [".next/**", "!.next/cache/**"]
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": [
+        "FLAGS_SECRET"
+      ]
     },
     "dev": {
       "cache": false,
