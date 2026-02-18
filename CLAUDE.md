@@ -1,0 +1,1 @@
+always read a AGENTS.md file if it exist in a folder

@@ -56,3 +56,6 @@ devenv.local.yaml
 
 # pre-commit
 .pre-commit-config.yaml
+
+# next-agents-md # note as a sortcut lets commit this
+#.next-docs/
