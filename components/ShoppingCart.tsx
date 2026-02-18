@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { RenderTimestampBadge } from '@/components/RenderTimestampBadge';
 import { CartItem } from '@/types/product';
+import { useEffect, useState } from 'react';
 
 interface ShoppingCartProps {
   items: CartItem[];
@@ -9,6 +10,11 @@ interface ShoppingCartProps {
 
 export function ShoppingCart({ items: initialItems }: ShoppingCartProps) {
   const [items, setItems] = useState<CartItem[]>(initialItems);
+  const [clientUpdatedAt, setClientUpdatedAt] = useState<string>(() => new Date().toISOString());
+
+  useEffect(() => {
+    setClientUpdatedAt(new Date().toISOString());
+  }, [items]);
 
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
@@ -25,6 +31,9 @@ export function ShoppingCart({ items: initialItems }: ShoppingCartProps) {
   return (
     <div className="rounded-lg border border-gray-200 bg-white p-6">
       <h2 className="mb-4 text-2xl font-bold text-gray-900">Shopping Cart</h2>
+      <div className="mb-4">
+        <RenderTimestampBadge label="Client updated at"  />
+      </div>
       {items.length === 0 ? (
         <p className="text-gray-600">Your cart is empty</p>
       ) : (

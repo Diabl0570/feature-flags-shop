@@ -1,4 +1,4 @@
-import { flag } from 'flags/next';
+import { flag, getPrecomputed } from 'flags/next';
 
 // Flag definitions with explicit options for toolbar
 export const showNewLayout = flag<boolean>({
@@ -29,4 +29,10 @@ export const toolbarFlags = {
 } as const;
 
 export const precomputeFlags = [showNewLayout, enablePromoBanner] as const;
+
+export const getPrecomputedForCode = async (code: string) : Promise<boolean[]>=> {
+  "use cache"
+  return await getPrecomputed([showNewLayout], precomputeFlags, code);
+}
+
 
