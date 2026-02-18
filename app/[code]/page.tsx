@@ -1,4 +1,5 @@
 import { ProductCard } from '@/components/ProductCard';
+import { RenderTimestampBadge } from '@/components/RenderTimestampBadge';
 import { enablePromoBanner, precomputeFlags, showNewLayout } from '@/lib/flags';
 import { getProducts } from '@/lib/products';
 import { getPrecomputed } from 'flags/next';
@@ -16,12 +17,13 @@ export const generateStaticParams = async () => {
 
 export default async function HomePage({ params }: HomePageProps) {
   const { code } = await params;
-  const products = getProducts();
+  const products = await getProducts();
   const [newLayout, promoBanner] = (await getPrecomputed(
     [showNewLayout, enablePromoBanner],
     precomputeFlags,
     code,
   )) as [boolean, boolean];
+  const serverRenderedAt = new Date().toISOString();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -38,6 +40,10 @@ export default async function HomePage({ params }: HomePageProps) {
       </header>
 
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="mb-6">
+          <RenderTimestampBadge label="Server rendered at" isoTimestamp={serverRenderedAt} />
+        </div>
+
         {promoBanner && (
           <div className="mb-8 rounded-lg bg-blue-600 p-4 text-center text-white">
             <p className="text-lg font-semibold">🎉 Special Offer: Get 20% off your first order!</p>

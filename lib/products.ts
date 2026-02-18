@@ -1,4 +1,7 @@
 import { Product } from '@/types/product';
+import { unstable_cache } from 'next/cache';
+
+export const PRODUCTS_TAG = 'products';
 
 export const products: Product[] = [
   {
@@ -51,10 +54,22 @@ export const products: Product[] = [
   },
 ];
 
-export function getProducts(): Product[] {
-  return products;
+const getProductsCached = unstable_cache(async () => products, ['products-list'], {
+  tags: [PRODUCTS_TAG],
+});
+
+const getProductByIdCached = unstable_cache(
+  async (id: string) => products.find((product) => product.id === id),
+  ['products-by-id'],
+  {
+    tags: [PRODUCTS_TAG],
+  }
+);
+
+export async function getProducts(): Promise<Product[]> {
+  return getProductsCached();
 }
 
-export function getProductById(id: string): Product | undefined {
-  return products.find((product) => product.id === id);
+export async function getProductById(id: string): Promise<Product | undefined> {
+  return getProductByIdCached(id);
 }

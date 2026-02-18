@@ -1,12 +1,14 @@
 import { ProductCard } from "@/components/ProductCard";
+import { RenderTimestampBadge } from "@/components/RenderTimestampBadge";
 import { enablePromoBanner, showNewLayout } from "@/lib/flags";
 import { getProducts } from "@/lib/products";
 import Link from "next/link";
 
 export default async function Home() {
-  const products = getProducts();
+  const products = await getProducts();
   const newLayout = await showNewLayout();
   const promoBanner = await enablePromoBanner();
+  const serverRenderedAt = new Date().toISOString();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -23,6 +25,13 @@ export default async function Home() {
       </header>
 
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="mb-6">
+          <RenderTimestampBadge
+            label="Server rendered at"
+            isoTimestamp={serverRenderedAt}
+          />
+        </div>
+
         {promoBanner && (
           <div className="mb-8 rounded-lg bg-blue-600 p-4 text-center text-white">
             <p className="text-lg font-semibold">

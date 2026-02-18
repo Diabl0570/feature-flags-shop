@@ -1,8 +1,9 @@
+import { RenderTimestampBadge } from '@/components/RenderTimestampBadge';
+import { showNewLayout } from '@/lib/flags';
+import { getProductById } from '@/lib/products';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getProductById } from '@/lib/products';
-import { showNewLayout } from '@/lib/flags';
 
 interface ProductPageProps {
   params: Promise<{
@@ -12,8 +13,9 @@ interface ProductPageProps {
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { id } = await params;
-  const product = getProductById(id);
+  const product = await getProductById(id);
   const newLayout = await showNewLayout();
+  const serverRenderedAt = new Date().toISOString();
 
   if (!product) {
     notFound();
@@ -30,6 +32,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
       </header>
 
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="mb-6">
+          <RenderTimestampBadge label="Server rendered at" isoTimestamp={serverRenderedAt} />
+        </div>
+
         {newLayout ? (
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
             <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100">

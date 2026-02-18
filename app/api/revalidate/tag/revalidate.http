@@ -1,0 +1,6 @@
+POST http://localhost:3000/api/revalidate/tag
+Content-Type: application/json
+
+{
+  "tags": ["product-123", "category-456"]
+}
