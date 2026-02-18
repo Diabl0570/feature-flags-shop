@@ -15,7 +15,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const { id } = await params;
   const product = await getProductById(id);
   const newLayout = await showNewLayout();
-  const serverRenderedAt = new Date().toISOString();
 
   if (!product) {
     notFound();
@@ -33,7 +32,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="mb-6">
-          <RenderTimestampBadge label="Server rendered at" isoTimestamp={serverRenderedAt} />
+          <RenderTimestampBadge label="Server rendered at" />
         </div>
 
         {newLayout ? (

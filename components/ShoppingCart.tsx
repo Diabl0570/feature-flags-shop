@@ -32,7 +32,7 @@ export function ShoppingCart({ items: initialItems }: ShoppingCartProps) {
     <div className="rounded-lg border border-gray-200 bg-white p-6">
       <h2 className="mb-4 text-2xl font-bold text-gray-900">Shopping Cart</h2>
       <div className="mb-4">
-        <RenderTimestampBadge label="Client updated at" isoTimestamp={clientUpdatedAt} />
+        <RenderTimestampBadge label="Client updated at"  />
       </div>
       {items.length === 0 ? (
         <p className="text-gray-600">Your cart is empty</p>

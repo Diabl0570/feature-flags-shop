@@ -8,7 +8,6 @@ export default async function Home() {
   const products = await getProducts();
   const newLayout = await showNewLayout();
   const promoBanner = await enablePromoBanner();
-  const serverRenderedAt = new Date().toISOString();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -28,7 +27,6 @@ export default async function Home() {
         <div className="mb-6">
           <RenderTimestampBadge
             label="Server rendered at"
-            isoTimestamp={serverRenderedAt}
           />
         </div>
 
