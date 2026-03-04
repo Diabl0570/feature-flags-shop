@@ -1,4 +1,7 @@
 import { Product } from '@/types/product';
+import { cacheTag } from 'next/cache';
+
+export const PRODUCTS_TAG = 'products';
 
 export const products: Product[] = [
   {
@@ -51,10 +54,20 @@ export const products: Product[] = [
   },
 ];
 
-export function getProducts(): Product[] {
+
+export async function getProducts(): Promise<Product[]> {
+  "use cache"
+  await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate database latency
+  cacheTag("products");
+  
   return products;
 }
 
-export function getProductById(id: string): Product | undefined {
-  return products.find((product) => product.id === id);
+export async function getProductById(id: string): Promise<Product | undefined> {
+  "use cache"
+
+  await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate database latency
+  cacheTag("product-" + id);
+
+  return products.find((product) => product.id === id)
 }

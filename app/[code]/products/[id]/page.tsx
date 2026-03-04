@@ -1,6 +1,7 @@
-import { precomputeFlags, showNewLayout } from '@/lib/flags';
+import { RenderTimestampBadge } from '@/components/RenderTimestampBadge';
+import { getPrecomputedForCode, precomputeFlags } from '@/lib/flags';
 import { getProductById } from '@/lib/products';
-import { getPrecomputed } from 'flags/next';
+import { generatePermutations } from 'flags/next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -13,13 +14,15 @@ interface ProductPageProps {
 }
 
 export const generateStaticParams = async () => {
-  return []
+  const codes = await generatePermutations(precomputeFlags);
+  const productIds = [1,2,3]; // important products we want to pre-render
+  return codes.flatMap((code) => productIds.map((id) => ({ code, id: id.toString() })));
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { code, id } = await params;
-  const product = getProductById(id);
-  const [newLayout] = (await getPrecomputed([showNewLayout], precomputeFlags, code)) as [boolean];
+  const product = await getProductById(id);
+  const [newLayout] = await getPrecomputedForCode(code);
 
   if (!product) {
     notFound();
@@ -36,6 +39,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
       </header>
 
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="mb-6">
+          <RenderTimestampBadge label="Server rendered at"  />
+        </div>
+
         {newLayout ? (
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
             <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100">

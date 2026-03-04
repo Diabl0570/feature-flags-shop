@@ -1,6 +1,7 @@
-import Link from 'next/link';
 import { ShoppingCart } from '@/components/ShoppingCart';
 import { CartItem } from '@/types/product';
+import Link from 'next/link';
+import { Suspense } from 'react';
 
 export default function CartPage() {
   // Mock cart items - in a real app, this would come from a state management solution
@@ -36,8 +37,9 @@ export default function CartPage() {
       </header>
 
       <main className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
-        <ShoppingCart items={cartItems} />
-      </main>
+        <Suspense fallback={<div>Loading cart...</div>}>
+          <ShoppingCart items={cartItems} />
+        </Suspense>      </main>
     </div>
   );
 }
