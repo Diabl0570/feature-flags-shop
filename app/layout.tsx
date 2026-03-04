@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import FlagsToolbar from "@/components/FlagsToolbar";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const metadata: Metadata = {
   title: "Demo Shop - eCommerce Store",
@@ -17,6 +18,7 @@ export default function RootLayout({
       <body className="antialiased">
         {children}
         <FlagsToolbar />
+        <SpeedInsights />
       </body>
     </html>
   );
