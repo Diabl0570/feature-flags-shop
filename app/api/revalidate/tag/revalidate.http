@@ -1,8 +1,8 @@
-@host = http://localhost:3000
 @host = https://feature-flags-shop-git-feat-sh-ff2837-team-rockstars-it-sandbox.vercel.app
+@host = http://localhost:3001
 POST {{host}}/api/revalidate/tag
 Content-Type: application/json
 
 {
-  "tags": ["product-1"]
+  "tags": ["timestamp-badge"]
 }
