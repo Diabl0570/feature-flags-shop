@@ -1,12 +1,23 @@
+import { Suspense } from 'react';
+import { RenderTimestampBadgeClient } from './RenderTimestampBadgeClient';
+import { RenderTimestampBadgeServer } from './RenderTimestampBadgeServer';
+
 interface RenderTimestampBadgeProps {
   label: string;
 }
 
-export function RenderTimestampBadge({ label }: RenderTimestampBadgeProps) {
-  const currentTimestamp = performance.now();
+function TimestampBadgeFallback() {
   return (
-    <p className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">
-      {label}: <span className="ml-1 font-mono">{currentTimestamp}</span>
+    <p className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-400">
+      <span className="animate-pulse">…</span>
     </p>
+  );
+}
+
+export function RenderTimestampBadge({ label }: RenderTimestampBadgeProps) {
+  return (
+    <Suspense fallback={<TimestampBadgeFallback />}>
+      <RenderTimestampBadgeServer label={label} />
+    </Suspense>
   );
 }

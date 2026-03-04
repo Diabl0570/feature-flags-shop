@@ -32,7 +32,7 @@ export const precomputeFlags = [showNewLayout, enablePromoBanner] as const;
 
 export const getPrecomputedForCode = async (code: string) : Promise<boolean[]>=> {
   "use cache"
-  return await getPrecomputed([showNewLayout], precomputeFlags, code);
+  return await getPrecomputed([showNewLayout, enablePromoBanner], precomputeFlags, code);
 }
 
 

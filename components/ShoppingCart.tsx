@@ -3,6 +3,7 @@
 import { RenderTimestampBadge } from '@/components/RenderTimestampBadge';
 import { CartItem } from '@/types/product';
 import { useEffect, useState } from 'react';
+import { RenderTimestampBadgeClient } from './RenderTimestampBadgeClient';
 
 interface ShoppingCartProps {
   items: CartItem[];
@@ -32,7 +33,7 @@ export function ShoppingCart({ items: initialItems }: ShoppingCartProps) {
     <div className="rounded-lg border border-gray-200 bg-white p-6">
       <h2 className="mb-4 text-2xl font-bold text-gray-900">Shopping Cart</h2>
       <div className="mb-4">
-        <RenderTimestampBadge label="Client updated at"  />
+        <RenderTimestampBadgeClient label="Client updated at"  />
       </div>
       {items.length === 0 ? (
         <p className="text-gray-600">Your cart is empty</p>
