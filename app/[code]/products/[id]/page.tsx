@@ -22,7 +22,7 @@ export const generateStaticParams = async () => {
 export default async function ProductPage({ params }: ProductPageProps) {
   const { code, id } = await params;
   const product = await getProductById(id);
-  const [newLayout] = await getPrecomputedForCode(code);
+  const [newLayout, promoBanner] = await getPrecomputedForCode(code);
 
   if (!product) {
     notFound();
@@ -42,6 +42,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <div className="mb-6">
           <RenderTimestampBadge label="Server rendered at"  />
         </div>
+        
+        {promoBanner && (
+          <div className="mb-8 rounded-lg bg-blue-600 p-4 text-center text-white">
+            <p className="text-lg font-semibold">🎉 Special Offer: Get 20% off your first order!</p>
+          </div>
+        )}
 
         {newLayout ? (
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
