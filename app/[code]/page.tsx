@@ -30,7 +30,7 @@ export default async function HomePage({ params }: HomePageProps) {
             href="/cart"
             className="rounded-lg bg-blue-600 px-4 py-2 text-white font-semibold hover:bg-blue-700 transition-colors"
           >
-            Cart
+            Cart2
           </Link>
         </div>
       </header>
