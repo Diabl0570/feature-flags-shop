@@ -59,3 +59,4 @@ devenv.local.yaml
 
 # next-agents-md # note as a sortcut lets commit this
 #.next-docs/
+.env*.local
